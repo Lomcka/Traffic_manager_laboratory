@@ -35,8 +35,9 @@ class Graph {
   std::vector<Edge> GetShortestPath(int from, int to);
   std::vector<std::vector<Edge>> GetShortestPaths(int from);
 
-
  private:
+  const int kMaxDistance = INT_MAX;
+
   int n_{0};
   std::vector<std::vector<Edge>> connections_;
   bool DFS(int from, int to,
@@ -44,7 +45,7 @@ class Graph {
            std::vector<bool>& used);
   std::vector<Edge> Dijkstra(int from);
   std::vector<Edge> FindWay(int from, int to,
-                            std::vector<Edge>& from_what_node);
+                            std::vector<Edge>& path);
 };
 
 #endif  // GRAPH_H_
