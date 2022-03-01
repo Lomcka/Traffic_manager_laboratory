@@ -1,20 +1,23 @@
 #include "graph.h"
 
-Graph::Graph(std::vector<std::vector<Edge>> connections) {
-  connections_ = connections;
-  for (auto edges_from_cur_node : connections) {
-    for (auto edges : edges_from_cur_node) {
-      n_ = std::max(n_, edges.to);
+Graph::Graph(const std::vector<std::vector<Edge>>& connections) {
+  n_ = connections.size();
+  connections_.resize(n_);
+  for (int cur_node = 0; cur_node < n_; ++cur_node) {
+    for (auto edge : connections[cur_node]) {
+      edge.from = cur_node;
+      connections_[cur_node].push_back(edge);
     }
   }
 }
 
 Graph::Graph(int n) {
   n_ = n;
+  connections_.resize(n);
   for (int first_node = 0; first_node < n; ++first_node) {
     for (int second_node = 0; second_node < n; ++second_node) {
       if (first_node != second_node) {
-        connections_[first_node].push_back(Edge(second_node, 1));
+        connections_[first_node].push_back(Edge(first_node, second_node, 1));
       }
     }
   }
@@ -34,7 +37,7 @@ const std::vector<Graph::Edge>& Graph::GetEdges(int from) {
   return connections_[from];
 }
 
-int Graph::GetSize() {
+int Graph::GetSize() const {
   return n_;
 }
 
@@ -57,8 +60,6 @@ bool Graph::DFS(int from, int to,
   }
   used[from] = false;
 }
-
-
 std::vector<Graph::Edge> Graph::GetAnyPath(int from, int to) {
   std::vector<Edge> result_path;
   std::vector<bool> used(n_, false);
@@ -66,9 +67,51 @@ std::vector<Graph::Edge> Graph::GetAnyPath(int from, int to) {
   return result_path;
 }
 
-std::vector<Graph::Edge> Graph::GetShortestPath(int from, int to) {
 
+std::vector<Graph::Edge> Graph::FindWay(int from,
+                                        int to,
+                                        std::vector<Graph::Edge>& from_what_node) {
+  std::vector<Edge> result;
+  int cur_node = to;
+  while (cur_node != from) {
+    Edge edge = from_what_node[cur_node];
+    cur_node = edge.from;
+    result.push_back(edge);
+  }
+  reverse(result.begin(), result.end());
+  return result;
 }
 
-std::vector<Graph::Edge> Graph::GetShortestPaths(int from) {
+std::vector<Graph::Edge> Graph::Dijkstra(int from) {
+  std::vector<Edge> result(n_);
+  std::vector<int> dist(n_, INT_MAX);
+  dist[from] = 0;
+  std::set<std::pair<int, int>> buf;
+  buf.insert(std::make_pair(dist[from], from));
+  while (!buf.empty()) {
+    int cur_node = buf.begin()->second;
+    buf.erase(buf.begin());
+
+    for (auto edge : connections_[cur_node]) {
+      if (dist[edge.to] > dist[cur_node] + edge.length) {
+        buf.erase(std::make_pair(dist[edge.to], edge.to));
+        dist[edge.to] = dist[cur_node] + edge.length;
+        buf.insert(std::make_pair(dist[edge.to], edge.to));
+        result[edge.to] = edge;
+      }
+    }
+  }
+  return result;
+}
+std::vector<Graph::Edge> Graph::GetShortestPath(int from, int to) {
+  std::vector<Edge> from_what_node = Dijkstra(from);
+  return FindWay(from, to, from_what_node);
+}
+std::vector<std::vector<Graph::Edge>> Graph::GetShortestPaths(int from) {
+  std::vector<Edge> from_what_node = Dijkstra(from);
+  std::vector<std::vector<Edge>> result(n_);
+  for (int to = 0; to < n_; ++to) {
+    result[to] = FindWay(from, to, from_what_node);
+  }
+  return result;
 }
