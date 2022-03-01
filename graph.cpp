@@ -11,7 +11,7 @@ Graph::Graph(const std::vector<std::vector<Edge>>& connections) {
   }
 }
 
-Graph::Graph(int n) {
+Graph::Graph(int n) { // Constructor
   n_ = n;
   connections_.resize(n);
   for (int first_node = 0; first_node < n; ++first_node) {
