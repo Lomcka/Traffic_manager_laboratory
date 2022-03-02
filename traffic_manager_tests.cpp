@@ -2,7 +2,7 @@
 #include <gtest/gtest.h>
 
 TEST(Manager, GettersAndSetters) {
-  Graph a(5);
+  Clique a(5);
   std::vector<int> buns = {1, 2, 3, 4, 5};
   std::vector<int> vehicles = {1, 1, 1, 1, 1};
   TrafficManager m(a, buns, vehicles, 1);
@@ -15,7 +15,7 @@ TEST(Manager, GettersAndSetters) {
 }
 
 TEST(Manager, Transport) {
-  Graph a(5);
+  Clique a(5);
   std::vector<int> buns = {1, 2, 3, 4, 5};
   std::vector<int> vehicles = {1, 1, 1, 1, 1};
   TrafficManager m(a, buns, vehicles, 1);
@@ -35,7 +35,7 @@ TEST(Manager, Tricky) {
 
   std::vector<int> buns = {1, 2, 30, 4};
   std::vector<int> vehicles = {1, 1, 1, 1};
-  Graph a(edges);
+  Chain a(edges);
   TrafficManager m(a, buns, vehicles, 1);
   ASSERT_EQ(m.Transport(2, 3, 3), 18);
 }

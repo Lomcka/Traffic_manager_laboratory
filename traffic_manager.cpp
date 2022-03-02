@@ -53,7 +53,7 @@ void TrafficManager::SetVehiclesAmountInCity(int city, int vehicles) {
 }
 
 int TrafficManager::GetShortestPathLength(int from, int to) {
-  std::vector<AbstractGraph::Edge> path = country_.GetShortestPath(from, to);
+  std::vector<AbstractGraph::Edge> path = country_->GetShortestPath(from, to);
 
   int result = 0;
   for (auto edge : path) {
@@ -87,7 +87,7 @@ int TrafficManager::Transport(int from, int to, int buns_amount) {
 
 
   std::vector<std::pair<int, int>> nearest_city;
-  std::vector<std::vector<Graph::Edge>> shortest_ways = country_.GetShortestPaths(from);
+  std::vector<std::vector<Graph::Edge>> shortest_ways = country_->GetShortestPaths(from);
 
   for (int i = 0; i < shortest_ways.size(); ++i) {
     if (i == from) {
