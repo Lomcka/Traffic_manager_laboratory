@@ -3,13 +3,15 @@
 
 #include <vector>
 #include "graph.h"
+#include "clique.h"
+#include "chain.h"
 
 class TrafficManager {
  public:
-  TrafficManager(const Graph& graph,
+  TrafficManager(AbstractGraph& graph,
                   const std::vector<int>& buns_amounts,
                   const std::vector<int>& vehicles,
-                  int vehicle_capacity) : country_(graph),
+                  int vehicle_capacity) : country_(&graph),
                                           buns_(buns_amounts),
                                           vehicles_(vehicles),
                                           vehicle_capacity_(vehicle_capacity) {}
@@ -35,7 +37,7 @@ class TrafficManager {
   int GetShortestPathLength(int from, int to);
   void TransferVehicles(int from, int to, int count);
 
-  Graph country_;
+  AbstractGraph* country_;
   std::vector<int> buns_;
   std::vector<int> vehicles_;
   int vehicle_capacity_;
