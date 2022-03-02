@@ -10,6 +10,8 @@ class Graph : public AbstractGraph {
 
   explicit Graph(int n) : AbstractGraph(n) {}
 
+  Graph() : AbstractGraph() {}
+
   std::vector<Edge> GetAnyPath(int from, int to) override;
 };
 

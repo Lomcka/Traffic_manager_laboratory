@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <cassert>
 #include "traffic_manager.h"
 
 int TrafficManager::GetTotalBunsAmount() {
@@ -85,7 +86,6 @@ int TrafficManager::Transport(int from, int to, int buns_amount) {
     return GetShortestPathLength(from, to);
   }
 
-
   std::vector<std::pair<int, int>> nearest_city;
   std::vector<std::vector<Graph::Edge>> shortest_ways = country_->GetShortestPaths(from);
 
@@ -105,8 +105,13 @@ int TrafficManager::Transport(int from, int to, int buns_amount) {
   std::sort(nearest_city.rbegin(), nearest_city.rend());
 
   int result = 0;
+
   int transfer_vehicles = necessary_vehicles - GetVehiclesAmountInCity(from);
   while (transfer_vehicles > 0) {
+    if (nearest_city.empty()) {
+      assert(false);
+    }
+
     int current_city = nearest_city.back().second;
     int available_vehicles = GetVehiclesAmountInCity(current_city);
     if (available_vehicles >= transfer_vehicles) {

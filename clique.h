@@ -8,6 +8,7 @@ class Clique : public AbstractGraph {
     explicit Clique(int n) : AbstractGraph(n) {}
     explicit Clique(std::vector<std::vector<Edge>> connections)
     : AbstractGraph(connections) {}
+    Clique() : AbstractGraph() {}
 
     std::vector<Edge> GetAnyPath(int from, int to) override;
 };

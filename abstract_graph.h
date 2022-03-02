@@ -5,6 +5,7 @@
 #include <climits>
 #include <algorithm>
 #include <set>
+#include <iostream>
 
 class AbstractGraph {
  public:
@@ -46,6 +47,8 @@ class AbstractGraph {
     }
   }
 
+  AbstractGraph() = default;
+
   int GetEdgeLength(int from, int to) {
     for (auto edge : connections_[from]) {
       if (edge.to == to) {
@@ -82,8 +85,6 @@ class AbstractGraph {
  private:
   const int kMaxDistance = INT_MAX;
 
-  std::vector<std::vector<Edge>> connections_;
-
   std::vector<Edge> Dijkstra(int from) {
     std::vector<Edge> result(n_);
     std::vector<int> dist(n_, kMaxDistance);
@@ -115,6 +116,7 @@ class AbstractGraph {
       cur_node = edge.from;
       result.push_back(edge);
     }
+
     reverse(result.begin(), result.end());
     return result;
   }
@@ -140,6 +142,7 @@ class AbstractGraph {
     }
     used[from] = false;
   }
+  std::vector<std::vector<Edge>> connections_;
 };
 
 #endif  // ABSTRACT_GRAPH_H_
