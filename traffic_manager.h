@@ -15,15 +15,16 @@ class TrafficManager {
                                           vehicle_capacity_(vehicle_capacity) {}
 
   int GetTotalBunsAmount();
-  int GetTotalVehiclesAmount();
   int GetBunsAmountInCity(int city);
-  int GetVehiclesAmountInCity(int city);
-
   std::vector<int> GetBunsAmounts();
+
+  int GetTotalVehiclesAmount();
+  int GetVehiclesAmountInCity(int city);
   std::vector<int> GetVehiclesAmounts();
 
   void SetBunsAmounts(const std::vector<int>& buns);
   void SetBunsAmountInCity(int city, int buns);
+
   void SetVehiclesAmounts(const std::vector<int>& vehicles);
   void SetVehiclesAmountInCity(int city, int vehicles);
 

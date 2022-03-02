@@ -66,7 +66,6 @@ int TrafficManager::GetShortestPathLength(int from, int to) {
 int TrafficManager::MoveVehicles(int from, int to, int count) {
   vehicles_[from] -= count;
   vehicles_[to] += count;
-  std::vector<Graph::Edge> path = country_.GetShortestPath(from, to);
 
   return GetShortestPathLength(from, to);
 }

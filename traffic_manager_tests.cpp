@@ -39,3 +39,4 @@ TEST(Manager, Tricky) {
   TrafficManager m(a, buns, vehicles, 1);
   ASSERT_EQ(m.Transport(2, 3, 3), 18);
 }
+
