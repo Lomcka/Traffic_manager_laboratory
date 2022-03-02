@@ -53,7 +53,7 @@ void TrafficManager::SetVehiclesAmountInCity(int city, int vehicles) {
 }
 
 int TrafficManager::GetShortestPathLength(int from, int to) {
-  std::vector<Graph::Edge> path = country_.GetShortestPath(from, to);
+  std::vector<AbstractGraph::Edge> path = country_.GetShortestPath(from, to);
 
   int result = 0;
   for (auto edge : path) {
